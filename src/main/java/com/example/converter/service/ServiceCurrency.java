@@ -27,17 +27,17 @@ public class ServiceCurrency {
 
     public Example getValute() throws JsonProcessingException {
         restTemplate = new RestTemplate();
-        String value = restTemplate.getForObject(URL_API,String.class);
+        String value = restTemplate.getForObject(URL_API, String.class);
         ObjectMapper objectMapper = new ObjectMapper();
-        Example example = objectMapper.readValue(value.toLowerCase(),Example.class);
+        Example example = objectMapper.readValue(value.toLowerCase(), Example.class);
         return example;
     }
 
     public Example parseValutes() throws JsonProcessingException {
         restTemplate = new RestTemplate();
         String result = restTemplate.getForObject(URL_API, String.class);
-        result = result.replace("\n", "").replace("  ","");
-        String z = result.replaceAll("},\"[A-Z]{3}\": \\{","},{").replace("\"Valute\": {\"AUD\": ","\"Valute\": [").trim().replace("}}","}]");
+        result = result.replace("\n", "").replace("  ", "");
+        String z = result.replaceAll("},\"[A-Z]{3}\": \\{", "},{").replace("\"Valute\": {\"AUD\": ", "\"Valute\": [").trim().replace("}}", "}]");
         ObjectMapper objectMapper = new ObjectMapper();
         Example example = objectMapper.readValue(z, Example.class);
         return example;
@@ -48,7 +48,28 @@ public class ServiceCurrency {
         Valute secondValute = new Valute();
         Example example = parseValutes();
 
-        for (int i =0;i<example.getValute().length;i++) {
+        // конвуртируем в рубль
+        if (valuteTo.equals("RUB")) {
+            for (int i = 0; i < example.getValute().length; i++){
+                if (valuteFrom.equals(example.getValute()[i].getCharCode())) {
+                    firstValute = example.getValute()[i];
+                }
+            }
+                return amount.multiply(firstValute.getValue()).setScale(2, RoundingMode.HALF_UP);
+        }
+
+        // конвуртируем рубль в другую валюту
+        if (valuteFrom.equals("RUB")) {
+            for (int i = 0; i < example.getValute().length; i++){
+                if (valuteTo.equals(example.getValute()[i].getCharCode())) {
+                    secondValute = example.getValute()[i];
+                }
+            }
+            return amount.divide(secondValute.getValue(), 10, RoundingMode.HALF_UP).setScale(2, RoundingMode.HALF_UP);
+        }
+
+        // конвуртируем валюты, кроме рубля
+        for (int i = 0; i < example.getValute().length; i++) {
             if (valuteFrom.equals(example.getValute()[i].getCharCode())) {
                 firstValute = example.getValute()[i];
             }
@@ -56,7 +77,7 @@ public class ServiceCurrency {
                 secondValute = example.getValute()[i];
             }
         }
-        return amount.multiply(firstValute.getValue().divide(firstValute.getNominal()).multiply(secondValute.getNominal().divide(secondValute.getValue(),10, RoundingMode.HALF_UP)).setScale(2,RoundingMode.HALF_UP));
+        return amount.multiply(firstValute.getValue().divide(firstValute.getNominal()).multiply(secondValute.getNominal().divide(secondValute.getValue(), 10, RoundingMode.HALF_UP)).setScale(2, RoundingMode.HALF_UP));
     }
 
 
