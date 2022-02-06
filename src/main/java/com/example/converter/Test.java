@@ -1,12 +1,11 @@
 package com.example.converter;
 
 import com.example.converter.model.Example;
-import com.example.converter.model.Valute;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.client.RestTemplate;
 
-import static com.example.converter.Constants.URL_API;
+import static com.example.converter.constants.Constants.URL_API;
 
 public class Test {
 

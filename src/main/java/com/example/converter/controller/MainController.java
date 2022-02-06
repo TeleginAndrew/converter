@@ -1,7 +1,7 @@
 package com.example.converter.controller;
 
+import com.example.converter.constants.Constants;
 import com.example.converter.model.Example;
-import com.example.converter.model.Valute;
 import com.example.converter.service.ServiceCurrency;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 @Controller
 public class MainController {
-    @Autowired
     ServiceCurrency serviceCurrency;
 
+    @Autowired
+    public MainController(ServiceCurrency serviceCurrency) {
+        this.serviceCurrency = serviceCurrency;
+    }
 
 
     @GetMapping("/")
@@ -43,22 +45,9 @@ public class MainController {
     @PostMapping("/converter")
     public String convert(@RequestParam BigDecimal amount, @RequestParam String valuteFrom, @RequestParam String valuteTo, Model model) throws Exception {
         if (amount == null || valuteFrom == null || valuteTo == null) {
-            throw new Exception("Params in method are null");
+            throw new Exception(Constants.EXC_PARAMS);
         }
-        Valute firstValute = new Valute();
-        Valute secondValute = new Valute();
-        Example example = serviceCurrency.parseValutes();
-
-        for (int i =0;i<example.getValute().length;i++) {
-            if (valuteFrom.equals(example.getValute()[i].getCharCode())) {
-                firstValute = example.getValute()[i];
-            }
-            if (valuteTo.equals(example.getValute()[i].getCharCode())) {
-                secondValute = example.getValute()[i];
-            }
-        }
-
-        BigDecimal result = amount.multiply(firstValute.getValue().divide(firstValute.getNominal()).multiply(secondValute.getNominal().divide(secondValute.getValue(),10, RoundingMode.HALF_UP)).setScale(2,RoundingMode.HALF_UP));
+        BigDecimal result = serviceCurrency.convertValute(amount,valuteFrom,valuteTo);
         model.addAttribute("result",result);
 
         return "converter";
