@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Converter</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet" >
+</head>
+<body>
+<h1>Converter</h1>
+<form action="/converter" method="post">
+    <label for="amount">Сумма</label>
+    <input type="text" id="amount" name="amount"><br><br>
+
+    <select name = "valuteFrom" id="valuteFrom">
+        <option value = "USD" selected>USD</option>
+        <option value = "EUR">EUR</option>
+        <option value = "AZN">AZN</option>
+        <option value = "AUD">AUD</option>
+        <option value = "GBP">GBP</option>
+        <option value = "AMD">AMD</option>
+        <option value = "BYN">BYN</option>
+        <option value = "BGN">BGN</option>
+        <option value = "BRL">BRL</option>
+        <option value = "HUF">HUF</option>
+        <option value = "HKD">HKD</option>
+        <option value = "DKK">DKK</option>
+        <option value = "INR">INR</option>
+        <option value = "KZT">KZT</option>
+        <option value = "CAD">CAD</option>
+        <option value = "JPY">JPY</option>
+    </select>
+    <select name = "valuteTo">
+        <option value = "USD" selected>USD</option>
+        <option value = "EUR">EUR</option>
+        <option value = "AZN">AZN</option>
+        <option value = "AUD">AUD</option>
+        <option value = "GBP">GBP</option>
+        <option value = "AMD">AMD</option>
+        <option value = "BYN">BYN</option>
+        <option value = "BGN">BGN</option>
+        <option value = "HUF">HUF</option>
+        <option value = "HKD">HKD</option>
+        <option value = "DKK">DKK</option>
+        <option value = "INR">INR</option>
+        <option value = "KZT">KZT</option>
+        <option value = "CAD">CAD</option>
+        <option value = "JPY">JPY</option>
+
+    </select>
+    <input type="submit" value="Convert">
+</form>
+<br>
+<span>Result: </span>
+<span th:if="${result}!=null" th:text="${result}"></span>
+
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Table</title>
+</head>
+<body>
+<table border="1">
+    <tr>
+        <th>count</th>
+        <th>valute</th>
+        <th>nominal</th>
+        <th>name</th>
+        <th>value</th>
+
+    </tr>
+    <tr th:each="valute, state : ${example.getValute()}">
+        <td th:utext="${valute.getValue()}">count</td>
+       <td th:utext="${valute.getCharCode()}">valute</td>
+        <td th:utext="${valute.getNominal()}">nominal</td>
+        <td th:utext="${valute.getName()}">name</td>
+        <td th:utext="${valute.getValue()}">value</td>
+    </tr>
+</table>
+
+</body>
+</html>
