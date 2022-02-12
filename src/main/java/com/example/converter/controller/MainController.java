@@ -49,6 +49,7 @@ public class MainController {
         }
         BigDecimal result = serviceCurrency.convertValute(amount,valuteFrom,valuteTo);
         model.addAttribute("result",result);
+        model.addAttribute("valuteResult",valuteTo);
 
         return "converter";
     }
