@@ -7,7 +7,8 @@
 </head>
 <body>
 <h1>Converter</h1>
-<form action="/converter" method="post">
+
+<form action="/converter" method="post" class="myTable">
     <label for="amount">Сумма</label>
     <input type="text" id="amount" name="amount"><br><br>
 
@@ -52,8 +53,8 @@
     <input type="submit" value="Convert">
 </form>
 <br>
-<span>Result: </span>
-<span th:if="${result}!=null" th:text="${result}"></span>
+<span class="resultClass">Result: </span>
+<span class="resultClass" th:if="${result}!=null" th:text="${result}"></span><span>&nbsp;</span><span th:if="${valuteResult}!=null" th:text="${valuteResult}"></span>
 
 
 </body>

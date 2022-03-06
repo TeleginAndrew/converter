@@ -1,7 +1,8 @@
 package com.example.converter.controller;
 
 import com.example.converter.constants.Constants;
-import com.example.converter.model.Example;
+import com.example.converter.model.entity.ExchangeRates;
+import com.example.converter.model.entity.Valute;
 import com.example.converter.service.ServiceCurrency;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -30,15 +32,15 @@ public class MainController {
 
     @GetMapping("/table")
     public String getTablePage(Model model) throws JsonProcessingException {
-        Example example = serviceCurrency.parseValutes();
-        model.addAttribute(example);
+        List<Valute> valutes = serviceCurrency.getValutes();
+        model.addAttribute(valutes);
         return "table";
     }
 
     @GetMapping("/converter")
     public String getConverter(Model model) throws JsonProcessingException {
-        Example example = serviceCurrency.parseValutes();
-        model.addAttribute(example);
+        ExchangeRates exchangeRates = serviceCurrency.parseValutes();
+        model.addAttribute(exchangeRates);
         return "converter";
     }
 
@@ -49,7 +51,7 @@ public class MainController {
         }
         BigDecimal result = serviceCurrency.convertValute(amount,valuteFrom,valuteTo);
         model.addAttribute("result",result);
-
+        model.addAttribute("valuteResult",valuteTo);
         return "converter";
     }
 

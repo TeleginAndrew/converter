@@ -1,8 +1,16 @@
 html{
     font-size: 14px;
+    text-align: center;
 }
 h1{
     text-align: center;
     border-width: 3px;
-    color: #725dff;
+    color: #1b9314;
+}
+.myTable{
+    border: 1px solid #333;
+    margin: 0 auto;
+    padding: 50px;
+    width: 300px;
+    text-align: center;
 }

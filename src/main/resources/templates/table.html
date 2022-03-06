@@ -14,7 +14,7 @@
         <th>value</th>
 
     </tr>
-    <tr th:each="valute, state : ${example.getValute()}">
+    <tr th:each="valute, state : ${valuteList}">
         <td th:utext="${valute.getValue()}">count</td>
        <td th:utext="${valute.getCharCode()}">valute</td>
         <td th:utext="${valute.getNominal()}">nominal</td>
