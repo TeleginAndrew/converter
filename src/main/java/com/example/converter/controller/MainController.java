@@ -17,7 +17,7 @@ import java.util.List;
 
 @Controller
 public class MainController {
-    ServiceCurrency serviceCurrency;
+    final ServiceCurrency serviceCurrency;
 
     @Autowired
     public MainController(ServiceCurrency serviceCurrency) {
