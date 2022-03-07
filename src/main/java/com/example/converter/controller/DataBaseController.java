@@ -1,5 +1,6 @@
 package com.example.converter.controller;
 
+import com.example.converter.constants.Constants;
 import com.example.converter.model.entity.Valute;
 import com.example.converter.model.input.ValuteInput;
 import com.example.converter.service.DataBaseService;
@@ -16,12 +17,12 @@ public class DataBaseController {
         this.dataBaseService = dataBaseService;
     }
 
-    @GetMapping("/findValute/{charCode}")
+    @GetMapping(Constants.FIND_VALUTE)
     public Valute findCurrency(@PathVariable String charCode) {
         return dataBaseService.findCurrency(charCode);
     }
 
-    @PostMapping("/addValute")
+    @PostMapping(Constants.ADD_VALUTE)
     public void addValute(@RequestBody ValuteInput valuteInput) {
         dataBaseService.save(valuteInput);
     }

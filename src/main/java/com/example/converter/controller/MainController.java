@@ -25,26 +25,26 @@ public class MainController {
     }
 
 
-    @GetMapping("/")
+    @GetMapping(Constants.MAIN_PAGE)
     public String generalPage() {
         return "main";
     }
 
-    @GetMapping("/table")
+    @GetMapping(Constants.TABLE_PAGE)
     public String getTablePage(Model model) throws JsonProcessingException {
         List<Valute> valutes = serviceCurrency.getValutes();
         model.addAttribute(valutes);
         return "table";
     }
 
-    @GetMapping("/converter")
+    @GetMapping(Constants.CONVERTER_PAGE)
     public String getConverter(Model model) throws JsonProcessingException {
         ExchangeRates exchangeRates = serviceCurrency.parseValutes();
         model.addAttribute(exchangeRates);
         return "converter";
     }
 
-    @PostMapping("/converter")
+    @PostMapping(Constants.CONVERTER_PAGE)
     public String convert(@RequestParam BigDecimal amount, @RequestParam String valuteFrom, @RequestParam String valuteTo, Model model) throws Exception {
         if (amount == null || valuteFrom == null || valuteTo == null) {
             throw new Exception(Constants.EXC_PARAMS);

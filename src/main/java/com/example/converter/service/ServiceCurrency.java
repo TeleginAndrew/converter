@@ -7,7 +7,6 @@ import com.example.converter.repository.CurrencyRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -19,13 +18,11 @@ import java.util.List;
 @Service
 public class ServiceCurrency {
 
-    RestTemplate restTemplate;
     final CBCurrencyRepository cbCurrencyRepository;
     final CurrencyRepository currencyRepository;
 
     @Autowired
-    public ServiceCurrency(RestTemplate restTemplate, CBCurrencyRepository cbCurrencyRepository, CurrencyRepository currencyRepository) {
-        this.restTemplate = restTemplate;
+    public ServiceCurrency(CBCurrencyRepository cbCurrencyRepository, CurrencyRepository currencyRepository) {
         this.cbCurrencyRepository = cbCurrencyRepository;
         this.currencyRepository = currencyRepository;
     }

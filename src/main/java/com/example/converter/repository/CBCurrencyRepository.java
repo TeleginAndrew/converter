@@ -20,7 +20,6 @@ public class CBCurrencyRepository {
     }
 
     public ExchangeRates parseValutes() throws JsonProcessingException {
-        // restTemplate = new RestTemplate();
         String result = restTemplate.getForObject(URL_API, String.class);
         result = result.replace("\n", "").replace("  ", "");
         String z = result.replaceAll("},\"[A-Z]{3}\": \\{", "},{").replace("\"Valute\": {\"AUD\": ", "\"Valute\": [").trim().replace("}}", "}]");
